@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@theme {
+  --text-tiny: 11px;
+  --text-tiny--line-height: 1.45;
+
+  --text-13: 13px;
+  --text-13--line-height: 1.45;
+
+  --text-15: 15px;
+  --text-15--line-height: 1.45;
+
+  --text-17: 17px;
+  --text-17--line-height: 1.45;
+
+  --text-xs--line-height: 1.45;
+  --text-sm--line-height: 1.45;
+  --text-base--line-height: 1.45;
+  --text-lg--line-height: 1.45;
+  --text-xl--line-height: 1.45;
+  --text-2xl--line-height: 1.45;
+  --text-3xl--line-height: 1.45;
+  --text-4xl--line-height: 1.45;
+  --text-5xl--line-height: 1.45;
+  --text-6xl--line-height: 1.45;
+  --text-7xl--line-height: 1.45;
+  --text-8xl--line-height: 1.45;
+  --text-9xl--line-height: 1.45;
+}

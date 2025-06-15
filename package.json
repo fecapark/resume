@@ -1,0 +1,59 @@
+{
+  "name": "resume",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently 'vite' 'pnpm gen-color:watch'",
+    "build": "tsc -b && vite build",
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "preview": "vite preview",
+    "gen-color": "pnpm tsx ./scripts/codegen/gen-color.mts",
+    "gen-color:watch": "pnpm tsx watch --clear-screen=false --include ./src/styles/color.variable.css ./scripts/codegen/gen-color.mts"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "core-js": "^3.43.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.10",
+    "tv": "^6.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@tailwindcss/vite": "^4.1.10",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.25.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-perfectionist": "^4.14.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-compiler": "19.1.0-rc.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "tsx": "^4.20.3",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.30.1",
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "zx": "^8.5.5"
+  },
+  "lint-staged": {
+    "*.{js,mjs,jsx,ts,mts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "packageManager": "pnpm@10.12.1+sha256.889bac470ec93ccc3764488a19d6ba8f9c648ad5e50a9a6e4be3768a5de387a3"
+}

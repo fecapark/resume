@@ -1,0 +1,3 @@
+COMMIT_MSG_FILE=$1
+
+pnpm tsx ./scripts/commit-msg.mts $COMMIT_MSG_FILE

@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev 스타트",
+      "type": "shell",
+      "command": "./scripts/vscode.sh",
+      "group": {
+        "kind": "build",
+        // 빌드 작업 실행 트리거에 포함돼요. 커맨드 시프트 B를 누르면 트리거됌.
+        "isDefault": true
+      },
+      "presentation": {},
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

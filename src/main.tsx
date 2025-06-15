@@ -3,10 +3,15 @@ import { createRoot } from 'react-dom/client'
 import 'core-js/stable'
 
 import './styles/index.css'
+
+import { LocomotiveScrollProvider } from '@/components/Providers/LocomotiveProvider'
+
 import { App } from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <LocomotiveScrollProvider>
+      <App />
+    </LocomotiveScrollProvider>
   </StrictMode>
 )

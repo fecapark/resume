@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 import { LocomotiveScrollEvent } from 'react-locomotive-scroll'
 
-import { useLocomotiveScrollInstance } from '@/components/Providers/LocomotiveProvider'
+import { useLocomotiveScrollInstance } from '@/components/Providers/LocomotiveScrollInstanceProvider'
 import { useStageSize } from '@/hooks/useStageSize'
 
 interface LocomotiveScrollValueProps {
-  ref: React.RefObject<HTMLElement>
+  element: HTMLElement | null
 }
 
-export const useLocomotiveScrollValue = ({ ref }: LocomotiveScrollValueProps) => {
+export const useLocomotiveScrollValue = ({ element }: LocomotiveScrollValueProps) => {
   const [scrollY, setScrollY] = useState(0)
   const [scrollYRatio, setScrollYRatio] = useState(0)
   const [scrollHeight, setScrollHeight] = useState(0)
   const { scroll } = useLocomotiveScrollInstance()
-  const { isStageSetted, stageHeight } = useStageSize()
+  const { stageHeight } = useStageSize()
 
   useEffect(() => {
     if (!scroll) {
@@ -36,14 +36,11 @@ export const useLocomotiveScrollValue = ({ ref }: LocomotiveScrollValueProps) =>
 
   useEffect(() => {
     const onResize = () => {
-      if (!ref.current) {
-        return
-      }
-      if (!isStageSetted) {
+      if (!element) {
         return
       }
 
-      const { height } = ref.current.getBoundingClientRect()
+      const { height } = element.getBoundingClientRect()
       setScrollHeight(Math.max(height - stageHeight, 0))
     }
 
@@ -53,7 +50,7 @@ export const useLocomotiveScrollValue = ({ ref }: LocomotiveScrollValueProps) =>
     return () => {
       window.removeEventListener('resize', onResize)
     }
-  }, [ref, stageHeight, isStageSetted])
+  }, [element, stageHeight])
 
   return { scrollY, scrollYRatio, scroll }
 }

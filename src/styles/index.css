@@ -4,10 +4,6 @@
 @import './transition.css';
 
 * {
-  margin: 0;
-  padding: 0;
-  outline: 0;
-
   box-sizing: border-box;
 
   scrollbar-width: thin;
@@ -19,6 +15,10 @@ body,
 #root {
   width: 100%;
   min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+  outline: 0;
 }
 
 body {

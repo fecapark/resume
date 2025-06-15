@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 
 interface StageSizeType {
-  isStageSetted: boolean
   stageHeight: number
   stageWidth: number
 }
 
 export const useStageSize = () => {
-  const [{ stageWidth, stageHeight, isStageSetted }, setStageSize] = useState<StageSizeType>({
+  const [{ stageWidth, stageHeight }, setStageSize] = useState<StageSizeType>({
     stageWidth: 0,
     stageHeight: 0,
-    isStageSetted: false,
   })
   const stageAspectRatio = stageWidth / stageHeight
 
@@ -19,7 +17,6 @@ export const useStageSize = () => {
       setStageSize({
         stageWidth: window.innerWidth,
         stageHeight: window.innerHeight,
-        isStageSetted: true,
       })
     }
 
@@ -31,5 +28,5 @@ export const useStageSize = () => {
     }
   }, [setStageSize])
 
-  return { stageWidth, stageHeight, stageAspectRatio, isStageSetted }
+  return { stageWidth, stageHeight, stageAspectRatio }
 }

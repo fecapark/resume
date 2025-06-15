@@ -1,3 +1,9 @@
+import { HoveringText } from '@/components/HoveringText'
+
 export const App = () => {
-  return <>App</>
+  return (
+    <>
+      <HoveringText>sdkmsdskm</HoveringText>
+    </>
+  )
 }

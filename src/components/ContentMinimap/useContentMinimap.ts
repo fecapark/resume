@@ -91,7 +91,7 @@ export const useContentMinimap = () => {
     return () => {
       scroll.off('scroll', onScroll)
     }
-  }, [scroll, scrollContainerRef])
+  }, [scroll, scrollHeight])
 
   useEffect(() => {
     if (!targetElement) {

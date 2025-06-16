@@ -10,7 +10,7 @@ export const Section = ({ title, children }: React.PropsWithChildren<SectionProp
       <div className="mb-[4.8vw]">
         <HoveringText className="text-[1.5em] font-semibold">{title}</HoveringText>
       </div>
-      {children}
+      <div className="flex flex-col gap-[4.8vw]">{children}</div>
     </section>
   )
 }

@@ -5,8 +5,10 @@ import { HoveringThumbnail } from '@/components/HoveringThumbnail'
 import { useHoverTextSubArea } from '@/hooks/useHoverTextSubArea'
 
 interface ArticleProps {
-  content?: string
+  content?: React.ReactNode
   descriptions?: React.ReactNode[]
+  lowContainerMargin?: boolean
+  lowContentMargin?: boolean
   title: string
   titleThumbnailSrc?: string
 }
@@ -17,11 +19,13 @@ export const Article = ({
   children,
   content,
   titleThumbnailSrc,
+  lowContentMargin = false,
+  lowContainerMargin = false,
 }: React.PropsWithChildren<ArticleProps>) => {
   const { hoverAreaRef, hoverTargetKey, onHoveringComplete } = useHoverTextSubArea<HTMLDivElement>()
 
   return (
-    <div className="mb-[4.8vw] pl-[3.13vw]">
+    <div className={clsx('pl-[3.13vw]', lowContainerMargin ? 'mb-[2.4vw]' : 'mb-[4.8vw]')}>
       <HoveringText
         className="mb-[1.3vw] text-[1.2em] font-semibold"
         onHoveringComplete={onHoveringComplete}
@@ -59,7 +63,7 @@ export const Article = ({
 
       {descriptions && descriptions.length && (
         <div
-          className={clsx('text-grey500 text-[0.6em]', !content ? 'mb-[4.473vw]' : 'mb-[1.3vw]')}
+          className={clsx('text-grey500 text-[0.6em]', !content ? 'mb-[4.473vw]' : 'mb-[2.4vw]')}
         >
           {descriptions.map((description, i) => (
             <HoveringText key={i}>{description}</HoveringText>
@@ -68,7 +72,12 @@ export const Article = ({
       )}
 
       {content && (
-        <HoveringText className="text-neutralMuted mb-[4.473vw] text-[0.7em]">
+        <HoveringText
+          className={clsx(
+            'text-neutralMuted text-[0.7em]',
+            !lowContentMargin ? 'mb-[4.473vw]' : 'mb-[2.4vw]'
+          )}
+        >
           {content}
         </HoveringText>
       )}

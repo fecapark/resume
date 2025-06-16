@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { HTMLMotionProps, motion, useMotionValue } from 'motion/react'
+import { HTMLMotionProps, motion, useMotionValue, useSpring } from 'motion/react'
 import { RefObject, useRef, useState } from 'react'
 
 import { useHoverThumbnailInfo } from '@/components/Providers/HoverThumbnailInfoProvider'
@@ -24,8 +24,8 @@ export const HoveringThumbnail = ({
   const motionRef = useRef<HTMLDivElement>(null)
   const { onHover } = useHoverThumbnailInfo()
   const [isHovering, setIsHovering] = useState(false)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
+  const x = useSpring(useMotionValue(0), { stiffness: 300, damping: 30 })
+  const y = useSpring(useMotionValue(0), { stiffness: 300, damping: 30 })
 
   const realRef = ref || motionRef
 

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import { LocomotiveScrollEvent } from 'react-locomotive-scroll'
 
-import { useLocomotiveScrollInstance } from '@/components/Providers/LocomotiveScrollInstanceProvider'
 import { useStageSize } from '@/hooks/useStageSize'
 
 interface LocomotiveScrollValueProps {
@@ -9,30 +7,31 @@ interface LocomotiveScrollValueProps {
 }
 
 export const useLocomotiveScrollValue = ({ element }: LocomotiveScrollValueProps) => {
-  const [scrollY, setScrollY] = useState(0)
-  const [scrollYRatio, setScrollYRatio] = useState(0)
+  // const [scrollY, setScrollY] = useState(0)
+  // const [scrollYRatio, setScrollYRatio] = useState(0)
   const [scrollHeight, setScrollHeight] = useState(0)
-  const { scroll } = useLocomotiveScrollInstance()
+  // const { scroll } = useLocomotiveScrollInstance()
   const { stageHeight } = useStageSize()
 
-  useEffect(() => {
-    if (!scroll) {
-      return () => {}
-    }
+  // useEffect(() => {
+  //   if (!scroll) {
+  //     return () => {}
+  //   }
 
-    const onScroll = (e: LocomotiveScrollEvent) => {
-      const scrollYFromTop = e.scroll.y
+  //   const onScroll = (e: LocomotiveScrollEvent) => {
+  //     const scrollYFromTop = e.scroll.y
 
-      setScrollY(scrollYFromTop)
-      setScrollYRatio(scrollYFromTop / scrollHeight)
-    }
+  //     setScrollY(scrollYFromTop)
+  //     scrollYRef.current = scrollYFromTop
+  //     setScrollYRatio(scrollYFromTop / scrollHeight)
+  //   }
 
-    scroll.on('scroll', onScroll)
+  //   scroll.on('scroll', onScroll)
 
-    return () => {
-      scroll.off('scroll', onScroll)
-    }
-  }, [scroll, scrollHeight])
+  //   return () => {
+  //     scroll.off('scroll', onScroll)
+  //   }
+  // }, [scroll, scrollHeight])
 
   useEffect(() => {
     const onResize = () => {
@@ -52,5 +51,6 @@ export const useLocomotiveScrollValue = ({ element }: LocomotiveScrollValueProps
     }
   }, [element, stageHeight])
 
-  return { scrollY, scrollYRatio, scroll }
+  // return { scrollY, scrollYRef, scrollHeight, scrollYRatio, scroll }
+  return { scrollHeight }
 }

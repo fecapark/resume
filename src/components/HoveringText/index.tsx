@@ -10,8 +10,18 @@ import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
 import { motionEasing } from '@/utils/motion'
 import { debounce } from '@/utils/performance'
 
+export type OnHoveringListener = ({
+  isMinimapContent,
+  containerElement,
+}: {
+  containerElement: HTMLDivElement | null
+  isMinimapContent: boolean
+}) => void
+
 interface HoveringTextProps {
   className?: string
+  onHoveringComplete?: OnHoveringListener
+  onHoveringStart?: OnHoveringListener
 }
 
 const hoveringVariants: Variants = {
@@ -24,6 +34,7 @@ const hoveringVariants: Variants = {
     transition: {
       duration: 1.2,
       ease: motionEasing.expoOut,
+      delay: 0.1,
     },
   },
 }
@@ -33,6 +44,8 @@ const textKeyNameSpace = uuidv4()
 export const HoveringText = ({
   children,
   className,
+  onHoveringComplete,
+  onHoveringStart,
 }: React.PropsWithChildren<HoveringTextProps>) => {
   const [lines, setLines] = useState<React.ReactElement[] | undefined>(undefined)
   const [isLineSetted, setIsLineSetted] = useState(false)
@@ -94,7 +107,9 @@ export const HoveringText = ({
       setIsLineSetted(true)
     }
 
-    const beforeDebounce = () => setIsLineSetted(false)
+    const beforeDebounce = () => {
+      setIsLineSetted(false)
+    }
     const debouncedResize = debounce(onResize, 300, beforeDebounce)
 
     window.addEventListener('resize', debouncedResize)
@@ -115,10 +130,20 @@ export const HoveringText = ({
   }
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-fit" data-hovering-text-container>
       <div
-        className={clsx(className, 'invisible w-full', isLineSetted ? 'absolute' : 'static')}
-        ref={updateTextRef}
+        className={clsx(
+          className,
+          'pointer-events-none invisible',
+          isLineSetted ? 'absolute' : 'static'
+        )}
+        data-hovering-text-dummy
+        ref={(v) => {
+          if (isLineSetted) {
+            return
+          }
+          updateTextRef(v)
+        }}
       >
         {children}
       </div>
@@ -127,6 +152,18 @@ export const HoveringText = ({
           animate={showingLines ? 'animate' : 'initial'}
           className={className}
           initial="initial"
+          onAnimationComplete={() => {
+            onHoveringComplete?.({
+              isMinimapContent,
+              containerElement: textRef.current,
+            })
+          }}
+          onAnimationStart={() => {
+            onHoveringStart?.({
+              isMinimapContent,
+              containerElement: textRef.current,
+            })
+          }}
           ref={updateTextRef}
           style={{ fontKerning: 'none' }}
         >

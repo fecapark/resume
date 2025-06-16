@@ -13,7 +13,8 @@ const minimapScreenFadeVariants: Variants = {
     opacity: 1,
     transition: {
       ease: motionEasing.materialBase,
-      duration: 0.35,
+      duration: 1,
+      delay: 0.7,
     },
   },
 }
@@ -28,8 +29,8 @@ const minimapContentFadeVariants: Variants = {
     y: 0,
     transition: {
       ease: motionEasing.expoOut,
-      delay: 0.3,
-      duration: 1,
+      delay: 0.5,
+      duration: 1.3,
     },
   },
 }
@@ -52,7 +53,7 @@ export const ContentMinimapView = () => {
   return (
     <div
       aria-hidden
-      className="absolute z-[10000] h-full w-fit"
+      className="absolute z-[10000] ml-[2.782vw] h-full w-fit"
       onClick={onMinimapClick}
       style={{
         width: minimapWidth,
@@ -65,6 +66,7 @@ export const ContentMinimapView = () => {
         data-screen-minimap
         initial="initial"
         style={{
+          willChange: 'transform',
           height: minimapScreenHeight,
           transform: `translateY(${minimapScreenY}px)`,
         }}
@@ -75,6 +77,7 @@ export const ContentMinimapView = () => {
         className="absolute left-1/2 select-none"
         data-content-minimap
         style={{
+          willChange: 'transform',
           transformOrigin: 'top center',
           width: contentWidth,
           transform: `translateX(calc(-50% + ${minimapPaddingLeft}px)) translateY(${-minimapY}px) scale(${minimapScale})`,
@@ -82,7 +85,7 @@ export const ContentMinimapView = () => {
       >
         <motion.div
           animate="animate"
-          className="size-fit opacity-85"
+          className="pointer-events-none size-fit opacity-85"
           initial="initial"
           variants={minimapContentFadeVariants}
         >

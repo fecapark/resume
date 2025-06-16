@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+@theme {
+  --animate-text-slide: text-slide 1s cubic-bezier(0.14, 1, 0.34, 1) backwards 0.5s;
+  --animate-text-underline-slide: text-underline-slide 1s cubic-bezier(0.14, 1, 0.34, 1) backwards
+    0.8s;
+
+  @keyframes text-slide {
+    0% {
+      background-position: right center;
+    }
+    100% {
+      background-position: left center;
+    }
+  }
+
+  @keyframes text-underline-slide {
+    0% {
+      transform-origin: left center;
+      transform: scale3d(0, 1, 1);
+    }
+    100% {
+      transform-origin: left center;
+      transform: scale3d(1, 1, 1);
+    }
+  }
+}

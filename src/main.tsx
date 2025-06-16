@@ -13,16 +13,14 @@ import { App } from './App.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Providers>
-      <div className="size-full px-16">
+      <div className="size-full">
         <ContentMinimap>
           <ContentMinimap.View />
 
           <LocomotiveScrollLayout>
-            <div className="w-full pl-[38vw]">
+            <div className="w-full pl-[40.7vw]">
               <ContentMinimap.Target>
-                <div className="text-[2vw]">
-                  <App />
-                </div>
+                <App />
               </ContentMinimap.Target>
             </div>
           </LocomotiveScrollLayout>

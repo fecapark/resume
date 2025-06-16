@@ -2,12 +2,14 @@
 @import './__generated__/color.gen.css';
 @import './typography.css';
 @import './transition.css';
+@import './keyframe.css';
 
 * {
   box-sizing: border-box;
+  word-break: keep-all;
 
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbarThumb) transparent;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 html,
@@ -59,6 +61,11 @@ html.has-scroll-dragging {
 
 .has-scroll-smooth [data-scroll-container] {
   min-height: 100vh;
+}
+
+[data-scroll-section],
+[data-scroll-section-inview] {
+  will-change: transform;
 }
 
 [data-scroll-direction='horizontal'] [data-scroll-container] {

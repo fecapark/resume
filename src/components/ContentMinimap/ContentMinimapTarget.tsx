@@ -9,5 +9,19 @@ export const ContentMinimapTarget = ({ children }: React.PropsWithChildren<unkno
     setRenderTarget(children)
   }, [children, setRenderTarget])
 
-  return <div ref={setTargetElement}>{children}</div>
+  return (
+    <div
+      ref={(v) => {
+        if (!v) {
+          return
+        }
+        if (v.childElementCount !== 1) {
+          throw new Error('ContentMinimap의 children은 하나의 노드로 이루어져야해요.')
+        }
+        setTargetElement(v?.firstChild as HTMLElement | null)
+      }}
+    >
+      {children}
+    </div>
+  )
 }

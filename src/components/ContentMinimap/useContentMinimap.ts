@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { LocomotiveScrollEvent } from 'react-locomotive-scroll'
 
 import { ContentMinimapContext } from '@/components/ContentMinimap/context'
+import { useLocomotiveScrollInstance } from '@/components/Providers/LocomotiveScrollInstanceProvider'
 import { useLocomotiveScrollValue } from '@/hooks/useLocomotiveScrollValue'
 import { useStageSize } from '@/hooks/useStageSize'
 
@@ -9,13 +10,16 @@ export const useContentMinimap = () => {
   const { targetElement } = useContext(ContentMinimapContext)
 
   const { stageWidth, stageHeight } = useStageSize()
-  const { scroll, scrollYRatio, scrollY } = useLocomotiveScrollValue({ element: targetElement })
+  const { scrollHeight } = useLocomotiveScrollValue({ element: targetElement })
+  const { scroll } = useLocomotiveScrollInstance()
 
+  const [scrollYRatio, setScrollYRatio] = useState(0)
   const [contentWidth, setContentWidth] = useState(0)
   const [contentHeight, setContentHeight] = useState(0)
   const [contentPaddingTop, setContentPaddingTop] = useState(0)
   const [contentPaddingRight, setContentPaddingRight] = useState(0)
   const [minimapY, setminimapY] = useState(0)
+  const scrollContainerRef = useRef<Element | null>(null)
   // const minimapWidth = stageWidth * 0.138528 <- is origin
   const minimapWidth = stageWidth * 0.145
   const minimapScale = isNaN(minimapWidth / stageWidth) ? 0 : minimapWidth / stageWidth
@@ -49,6 +53,13 @@ export const useContentMinimap = () => {
     }
   }
 
+  useEffect(() => {
+    if (!scroll) {
+      return
+    }
+    scrollContainerRef.current = document.querySelector('[data-scroll-section-inview]')
+  }, [scroll])
+
   /* 
     scrollTo 메서드와 유저 스크롤간 불일치 문제 해결 이펙트
   */
@@ -57,14 +68,12 @@ export const useContentMinimap = () => {
       return () => {}
     }
 
-    const element = document.querySelector('[data-scroll-section-inview]')
-
     const onScroll = (e: LocomotiveScrollEvent) => {
-      if (!element) {
+      if (!scrollContainerRef.current) {
         return
       }
 
-      const { transform } = window.getComputedStyle(element)
+      const { transform } = window.getComputedStyle(scrollContainerRef.current)
       const transformY = parseFloat(transform.split(',')[5].replace(')', ''))
       const newTransform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -${e.scroll.y}, 0, 1)`
 
@@ -72,8 +81,9 @@ export const useContentMinimap = () => {
       const transformYInt = Math.abs(Math.floor(transformY))
 
       if (scrollYInt !== transformYInt) {
-        ;(element as HTMLElement).style.transform = newTransform
+        ;(scrollContainerRef.current as HTMLElement).style.transform = newTransform
       }
+      setScrollYRatio(e.scroll.y / scrollHeight)
     }
 
     scroll.on('scroll', onScroll)
@@ -81,7 +91,7 @@ export const useContentMinimap = () => {
     return () => {
       scroll.off('scroll', onScroll)
     }
-  }, [scroll])
+  }, [scroll, scrollContainerRef])
 
   useEffect(() => {
     if (!targetElement) {
@@ -107,7 +117,6 @@ export const useContentMinimap = () => {
   }, [scrollYRatio, stageHeight, contentHeight, contentPaddingTop, minimapScale])
 
   return {
-    scrollY,
     contentWidth,
     contentPaddingTop,
     minimapWidth,

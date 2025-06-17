@@ -21,7 +21,11 @@ export const Introduction = () => {
             <MdInfo className="size-[1.25em] leading-0" />
             <div>
               웹사이트에서도 볼 수 있습니다.{' '}
-              <TextLink className="ml-[0.3em]" openInNewTab>
+              <TextLink
+                className="ml-[0.3em]"
+                href="https://fecapark-resume.vercel.app/"
+                openInNewTab
+              >
                 링크
               </TextLink>
             </div>

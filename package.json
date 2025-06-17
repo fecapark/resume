@@ -16,8 +16,10 @@
   },
   "dependencies": {
     "@toss/storage": "^1.4.1",
+    "@toss/utils": "^1.6.1",
     "clsx": "^2.1.1",
     "core-js": "^3.43.0",
+    "es-toolkit": "^1.39.3",
     "motion": "^12.18.1",
     "react": "^19.1.0",
     "react-device-detect": "^2.2.3",

@@ -10,6 +10,7 @@ import { Article } from '@/components/layout/Article'
 import { Block } from '@/components/layout/Block'
 import { Introduction } from '@/components/layout/Introduction'
 import { Section } from '@/components/layout/Section'
+import { useLoadedVideoSources } from '@/components/Providers/MediaLoader'
 import { TextLink } from '@/components/TextLink'
 
 const responsive = tv({
@@ -37,6 +38,7 @@ const responsive = tv({
 
 export const App = () => {
   const { container, font } = responsive()
+  const videoSources = useLoadedVideoSources()
 
   return (
     <div
@@ -113,7 +115,7 @@ export const App = () => {
                 </span>,
               ]}
               title="메이플랜드 옥션"
-              titleThumbnailSrc="/thumbnails/mapleland-auction/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/mapleland-auction/preview.webm']}
             >
               <Block
                 list={[
@@ -178,7 +180,7 @@ export const App = () => {
                 </span>,
               ]}
               title="Time Timer"
-              titleThumbnailSrc="/thumbnails/time-timer/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/time-timer/preview.webm']}
             >
               <Block
                 list={[
@@ -250,7 +252,7 @@ export const App = () => {
               ]}
               lowContainerMargin
               title="Yourssu Infrastructure System"
-              titleThumbnailSrc="/thumbnails/yis/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/yis/preview.webm']}
             >
               <Block
                 list={[
@@ -317,7 +319,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Number Rolling"
-              titleThumbnailSrc="/thumbnails/number-rolling/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/number-rolling/preview.webm']}
             />
             <Article
               content="메타볼 효과를 웹에 구현한 인터랙티브 프로젝트입니다. 퍼포먼스 향상을 위해 WebGL 라이브러리인 PIXI.js를 사용하여 구현했습니다. 약간의 재미를 위해 인터랙션으로 메타볼을 화면에 만들고 터트리는 애니메이션을 구성하였습니다. 메타볼이 터지는 스프링 효과에는 프레임 단위로 오브젝트들의 위치를 계산해야했기 때문에, 직접 스프링 효과 라이브러리를 구현해서 적용했습니다. 또한 여러가지 메타볼을 만들어낼 수 있도록 파라미터를 조정하는 인스펙터 UI를 제공합니다."
@@ -351,7 +353,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Metaball Interaction"
-              titleThumbnailSrc="/thumbnails/metaball-interaction/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/metaball-interaction/preview.webm']}
             />
             <Article
               content={
@@ -387,7 +389,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Material Form"
-              titleThumbnailSrc="/thumbnails/material-form/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/material-form/preview.webm']}
             >
               <Block
                 list={[
@@ -439,7 +441,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Inside Slushy"
-              titleThumbnailSrc="/thumbnails/inside-slushy/preview.webm"
+              titleThumbnailSrc={videoSources['/thumbnails/inside-slushy/preview.webm']}
             >
               <Block
                 list={[

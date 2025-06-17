@@ -10,6 +10,7 @@ import { config } from '@/components/config.ts'
 import { ContentMinimap } from '@/components/ContentMinimap/index.tsx'
 import { LocomotiveScrollLayout } from '@/components/layout/LocomotiveScrollLayout.tsx'
 import { Providers } from '@/components/Providers/index.tsx'
+import { MediaLoader } from '@/components/Providers/MediaLoader/index.tsx'
 
 import { App } from './App.tsx'
 
@@ -24,17 +25,19 @@ createRoot(document.getElementById('root')!).render(
             <App />
           </div>
         ) : (
-          <ContentMinimap>
-            <ContentMinimap.View />
+          <MediaLoader>
+            <ContentMinimap>
+              <ContentMinimap.View />
 
-            <LocomotiveScrollLayout>
-              <div className="w-full pl-[40.7vw]">
-                <ContentMinimap.Target>
-                  <App />
-                </ContentMinimap.Target>
-              </div>
-            </LocomotiveScrollLayout>
-          </ContentMinimap>
+              <LocomotiveScrollLayout>
+                <div className="w-full pl-[40.7vw]">
+                  <ContentMinimap.Target>
+                    <App />
+                  </ContentMinimap.Target>
+                </div>
+              </LocomotiveScrollLayout>
+            </ContentMinimap>
+          </MediaLoader>
         )}
       </div>
     </Providers>

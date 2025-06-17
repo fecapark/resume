@@ -5,4 +5,5 @@ export const motionEasing = {
   expoOut: cubicBezier(0.14, 1, 0.34, 1),
   materialBase: cubicBezier(0.2, 0, 0, 1),
   materialAccel: cubicBezier(0, 0, 0, 1),
+  expoIn: cubicBezier(0.7, 0, 0.84, 0),
 }

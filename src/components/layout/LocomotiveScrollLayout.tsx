@@ -7,8 +7,15 @@ import {
 
 import { useLocomotiveScrollInstance } from '@/components/Providers/LocomotiveScrollInstanceProvider'
 
+// https://github.com/locomotivemtl/locomotive-scroll/issues/438
 const locomotiveOptions = {
   smooth: true,
+  smartphone: {
+    smooth: true,
+  },
+  tablet: {
+    smooth: true,
+  },
   lerp: 0.08,
   multiplier: 1.2,
 }

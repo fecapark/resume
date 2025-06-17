@@ -12,6 +12,11 @@
   scrollbar-width: none;
 }
 
+*::selection {
+  background-color: var(--color-yellow300);
+  color: var(--color-neutral);
+}
+
 html,
 body,
 #root {

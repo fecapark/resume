@@ -22,8 +22,8 @@ export const Block = ({ title, description, list }: BlockProps) => {
 
       {list && list.length > 0 && (
         <div className="text-neutralMuted flex flex-col gap-[0.287vw] text-[0.6em] font-normal">
-          {list.map(({ text, indent = 1 }) => (
-            <HoveringText key={text?.toString()}>
+          {list.map(({ text, indent = 1 }, i) => (
+            <HoveringText key={i}>
               <span
                 className={clsx(
                   'inline-block min-w-2 text-center',

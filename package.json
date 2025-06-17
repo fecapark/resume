@@ -20,11 +20,13 @@
     "core-js": "^3.43.0",
     "motion": "^12.18.1",
     "react": "^19.1.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-locomotive-scroll": "^0.2.2",
     "react-simplikit": "^0.0.39",
     "split-type": "^0.3.4",
+    "tailwind-variants": "^1.0.0",
     "tailwindcss": "^4.1.10",
     "tv": "^6.1.0",
     "uuid": "^11.1.0"

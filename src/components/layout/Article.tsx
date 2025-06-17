@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 
+import { config } from '@/components/config'
 import { HoveringText } from '@/components/HoveringText'
 import { HoveringThumbnail } from '@/components/HoveringThumbnail'
 import { useHoverTextSubArea } from '@/hooks/useHoverTextSubArea'
@@ -42,7 +43,7 @@ export const Article = ({
           animateEl.classList.add('animate-text-underline-slide')
         }}
       >
-        {titleThumbnailSrc ? (
+        {titleThumbnailSrc && !config.printMode ? (
           <span className="relative inline-flex flex-col" {...hoverTargetKey}>
             <span className="text-blue500">{title}</span>
             <div

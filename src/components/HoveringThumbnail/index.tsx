@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { HTMLMotionProps, motion, useMotionValue, useSpring } from 'motion/react'
 import { RefObject, useRef, useState } from 'react'
 
+import { config } from '@/components/config'
 import { useHoverThumbnailInfo } from '@/components/Providers/HoverThumbnailInfoProvider'
 
 type HoveringThumbnailProps = HTMLMotionProps<'div'> & {
@@ -28,6 +29,10 @@ export const HoveringThumbnail = ({
   const y = useSpring(useMotionValue(0), { stiffness: 300, damping: 30 })
 
   const realRef = ref || motionRef
+
+  if (config.printMode) {
+    return children
+  }
 
   return (
     <motion.div
@@ -61,7 +66,7 @@ export const HoveringThumbnail = ({
     >
       {children}
       {isHovering && src && (
-        <motion.div className="absolute top-2 left-2 z-50" style={{ x, y }}>
+        <motion.div className="pointer-events-none absolute top-2 left-2 z-50" style={{ x, y }}>
           {thumbnailType === 'image' ? (
             <div className="border-grey300 max-w-[35vw] overflow-hidden rounded-xl border-[1px]">
               <img className="object-contain" src={src} />

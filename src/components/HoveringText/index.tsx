@@ -7,6 +7,7 @@ import { useIntersectionObserver } from 'react-simplikit'
 import SplitType, { SplitTypeOptions } from 'split-type'
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
 
+import { config } from '@/components/config'
 import { motionEasing } from '@/utils/motion'
 import { debounce } from '@/utils/performance'
 
@@ -121,7 +122,7 @@ export const HoveringText = ({
     }
   }, [isMinimapContent])
 
-  if (isMinimapContent) {
+  if (isMinimapContent || config.printMode) {
     return (
       <div className={className} ref={updateTextRef}>
         {children}

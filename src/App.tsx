@@ -1,7 +1,10 @@
+import { isMobile } from 'react-device-detect'
 import { FaGithub } from 'react-icons/fa'
 import { MdHouse } from 'react-icons/md'
 import { SiVelog } from 'react-icons/si'
+import { tv } from 'tailwind-variants'
 
+import { config } from '@/components/config'
 import { IconLink } from '@/components/IconLink'
 import { Article } from '@/components/layout/Article'
 import { Block } from '@/components/layout/Block'
@@ -9,10 +12,43 @@ import { Introduction } from '@/components/layout/Introduction'
 import { Section } from '@/components/layout/Section'
 import { TextLink } from '@/components/TextLink'
 
+const responsive = tv({
+  slots: {
+    container: '',
+    font: 'leading-[1.45] font-medium',
+  },
+  variants: {
+    media: {
+      printMode: {
+        container: 'py-[14.58vw]',
+        font: 'text-[2vw]',
+      },
+      mobile: {
+        container: 'px-[4vw] py-[14.58vw]',
+        font: 'text-[6vw]',
+      },
+      desktop: {
+        container: 'py-[14.58vw] pr-[10vw]',
+        font: 'text-[1.6vw]',
+      },
+    },
+  },
+})
+
 export const App = () => {
+  const { container, font } = responsive()
+
   return (
-    <div className="py-[14.58vw] pr-[10vw]">
-      <div className="text-[1.6vw] leading-[1.45] font-medium">
+    <div
+      className={container({
+        media: isMobile ? 'mobile' : config.printMode ? 'printMode' : 'desktop',
+      })}
+    >
+      <div
+        className={font({
+          media: isMobile ? 'mobile' : config.printMode ? 'printMode' : 'desktop',
+        })}
+      >
         <div className="flex flex-col gap-[14.4vw]">
           <Introduction />
 
@@ -56,7 +92,7 @@ export const App = () => {
 
           <Section title="Featured.">
             <Article
-              content="넥슨 메이플랜드에서 거래되는 아이템들의 현재 시세를 간단한 통계 결과와 함께 알려주는 서비스를 약 2주간 혼자서 개발했습니다. 거래 아이템들의 시세 판단 및 악의적 시세 조작 완화를 목적으로 삼았습니다. 커뮤니티와 유튜브를 통한 마케팅 덕분에 월 평균 PV 150만 이상을 기록했으며 수익화에 성공했습니다. 3개월 간 운영 후, 게임의 비전이 불투명해져 서비스 종료를 결정했습니다."
+              content="넥슨 메이플랜드에서 거래되는 아이템들의 현재 시세를 간단한 통계 결과와 함께 알려주는 서비스를 약 2주간 혼자서 개발했습니다. 거래 아이템들의 시세 판단 및 악의적 시세 조작 완화를 목적으로 삼았습니다. 커뮤니티와 유튜브를 통한 마케팅 덕분에 월 평균 PV 120만 이상을 기록했으며 수익화에 성공했습니다. 3개월 간 운영 후, 게임의 비전이 불투명해져 서비스 종료를 결정했습니다."
               descriptions={[
                 '2024.02 ~ 2024.05',
                 <span className="flex">
@@ -198,7 +234,7 @@ export const App = () => {
               content="숭실대학교 개발동아리 유어슈의 배포 인프라 관리 시스템인 YIS의 디자인과 프론트엔드를 혼자서 구현했으며 기획 고도화에 참여했습니다. 사용자 풀과 도메인 특성상 어려운 난이도를 고려하여 최대한 직관적으로 유저 플로우를 설계하고 구현했습니다. 토스증권 WTS를 벤치마킹해서 재사용가능하며 다형성을 갖는 기능 컴포넌트 제작에 많은 노력을 쏟았습니다. 메타프로그래밍을 적용해 여러 부분에서 생산성 향상을 이끌어냈습니다."
               descriptions={[
                 '2025.05 ~ 2025.06',
-                '관계인만 접근 가능한 프로젝트',
+                '인터널 프로덕트',
                 <span className="flex">
                   <IconLink className="mr-[0.15em]" href="https://yis.yourssu.com" openInNewTab>
                     <MdHouse className="size-[1.2em]" />
@@ -214,7 +250,7 @@ export const App = () => {
               ]}
               lowContainerMargin
               title="Yourssu Infrastructure System"
-              titleThumbnailSrc="/thumbnails/mapleland-auction/preview.webm"
+              titleThumbnailSrc="/thumbnails/yis/preview.webm"
             >
               <Block
                 list={[
@@ -257,7 +293,7 @@ export const App = () => {
             </Article>
 
             <Article
-              content="토스 스타일의 숫자 슬라이딩 애니메이션 라이브러리입니다. Simplicity 21 컨퍼런스에서 영감을 받아 하루만에 만들었습니다. 비단 라이브러리를 만드는 것에 그치지 않고, 데모 페이지를 제작하여 직접 다양한 파라미터를 적용해볼 수 있도록 했습니다."
+              content="토스 스타일의 숫자 슬라이딩 애니메이션 라이브러리입니다. 토스 Simplicity 21 컨퍼런스에서 영감을 받아 하루만에 만들었습니다. 비단 라이브러리를 만드는 것에 그치지 않고, 데모 페이지를 제작하여 직접 다양한 파라미터를 적용해볼 수 있도록 했습니다."
               descriptions={[
                 '2024.05',
                 '오픈소스 라이브러리',
@@ -284,7 +320,7 @@ export const App = () => {
               titleThumbnailSrc="/thumbnails/number-rolling/preview.webm"
             />
             <Article
-              content="메타볼 효과를 웹에 구현한 인터랙티브 프로젝트입니다. 퍼포먼스 향상을 위해 WebGL 라이브러리인 PIXI.js를 사용하여 구현했습니다. 약간의 재미를 위해 인터랙션으로 메타볼을 화면에 만들고 터트리는 애니메이션을 구성하였습니다. 또한 여러가지 메타볼을 만들어낼 수 있도록 파라미터를 조정하는 인스펙터 UI를 제공합니다."
+              content="메타볼 효과를 웹에 구현한 인터랙티브 프로젝트입니다. 퍼포먼스 향상을 위해 WebGL 라이브러리인 PIXI.js를 사용하여 구현했습니다. 약간의 재미를 위해 인터랙션으로 메타볼을 화면에 만들고 터트리는 애니메이션을 구성하였습니다. 메타볼이 터지는 스프링 효과에는 프레임 단위로 오브젝트들의 위치를 계산해야했기 때문에, 직접 스프링 효과 라이브러리를 구현해서 적용했습니다. 또한 여러가지 메타볼을 만들어낼 수 있도록 파라미터를 조정하는 인스펙터 UI를 제공합니다."
               descriptions={[
                 '2023.06',
                 '인터랙티브 프로젝트',

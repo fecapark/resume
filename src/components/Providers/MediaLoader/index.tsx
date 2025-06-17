@@ -81,7 +81,7 @@ export const MediaLoader = ({ children }: React.PropsWithChildren<unknown>) => {
   return (
     <>
       <div className="fixed top-0 left-0 -z-1 flex size-full items-center justify-center">
-        <div className="overflow-hidden text-[0.8vw] font-medium">
+        <div className="overflow-hidden text-lg font-medium">
           <div
             className=""
             style={

@@ -149,6 +149,14 @@ export const App = () => {
                 ]}
                 title="각종 UX 개선"
               />
+              <Block
+                list={[
+                  {
+                    text: 'TypeScript, Next.js (v14), Tailwind, Recoil, Tanstack Query, Firebase Firestore, AWS EC2',
+                  },
+                ]}
+                title="Tech Stack"
+              />
             </Article>
 
             <Article
@@ -228,6 +236,14 @@ export const App = () => {
                 ]}
                 title="기타 작업들"
               />
+              <Block
+                list={[
+                  {
+                    text: 'TypeScript, Next.js (v12), Emotion, Recoil, Firebase FCM',
+                  },
+                ]}
+                title="Tech Stack"
+              />
             </Article>
           </Section>
 
@@ -292,6 +308,14 @@ export const App = () => {
                 ]}
                 title="DX 개선 작업"
               />
+              <Block
+                list={[
+                  {
+                    text: 'React, Tanstack Router, Tanstack Query, TailwindCSS, Motion, Cloudflare Pages',
+                  },
+                ]}
+                title="Tech Stack"
+              />
             </Article>
 
             <Article
@@ -320,7 +344,16 @@ export const App = () => {
               lowContentMargin
               title="Number Rolling"
               titleThumbnailSrc={videoSources['/thumbnails/number-rolling/preview.webm']}
-            />
+            >
+              <Block
+                list={[
+                  {
+                    text: 'React, Vite, GSAP',
+                  },
+                ]}
+                title="Tech Stack"
+              />
+            </Article>
             <Article
               content="메타볼 효과를 웹에 구현한 인터랙티브 프로젝트입니다. 퍼포먼스 향상을 위해 WebGL 라이브러리인 PIXI.js를 사용하여 구현했습니다. 약간의 재미를 위해 인터랙션으로 메타볼을 화면에 만들고 터트리는 애니메이션을 구성하였습니다. 메타볼이 터지는 스프링 효과에는 프레임 단위로 오브젝트들의 위치를 계산해야했기 때문에, 직접 스프링 효과 라이브러리를 구현해서 적용했습니다. 또한 여러가지 메타볼을 만들어낼 수 있도록 파라미터를 조정하는 인스펙터 UI를 제공합니다."
               descriptions={[
@@ -354,7 +387,16 @@ export const App = () => {
               lowContentMargin
               title="Metaball Interaction"
               titleThumbnailSrc={videoSources['/thumbnails/metaball-interaction/preview.webm']}
-            />
+            >
+              <Block
+                list={[
+                  {
+                    text: 'Vanilla JS, PIXI.js, GLSL',
+                  },
+                ]}
+                title="Tech Stack"
+              />
+            </Article>
             <Article
               content={
                 <>
@@ -414,6 +456,14 @@ export const App = () => {
                     indent: 2,
                   },
                 ]}
+              />
+              <Block
+                list={[
+                  {
+                    text: 'Vanilla JS',
+                  },
+                ]}
+                title="Tech Stack"
               />
             </Article>
             <Article
@@ -478,6 +528,14 @@ export const App = () => {
                     text: '모든 오브젝트의 화면 리사이징 대응',
                   },
                 ]}
+              />
+              <Block
+                list={[
+                  {
+                    text: 'Vanilla JS',
+                  },
+                ]}
+                title="Tech Stack"
               />
             </Article>
           </Section>

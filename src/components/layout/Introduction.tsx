@@ -6,11 +6,13 @@ import { config } from '@/components/config'
 import { HoveringText } from '@/components/HoveringText'
 import { HoveringThumbnail } from '@/components/HoveringThumbnail'
 import { IconLink } from '@/components/IconLink'
+import { useLoadedMediaSources } from '@/components/Providers/MediaLoader'
 import { TextLink } from '@/components/TextLink'
 import { useHoverTextSubArea } from '@/hooks/useHoverTextSubArea'
 import { vars } from '@/styles/__generated__/color.gen'
 
 export const Introduction = () => {
+  const { images } = useLoadedMediaSources()
   const { hoverAreaRef, hoverTargetKey, onHoveringComplete } = useHoverTextSubArea<HTMLDivElement>()
 
   return (
@@ -30,7 +32,7 @@ export const Introduction = () => {
               </TextLink>
             </div>
           </div>
-          <img className="mb-[3vw] w-[10vw]" src="/thumbnails/me.jpeg" />
+          <img className="mb-[3vw] w-[10vw]" src={images['/thumbnails/me.jpeg']} />
         </>
       )}
       <HoveringText className="text-[1.75em] font-semibold" onHoveringComplete={onHoveringComplete}>

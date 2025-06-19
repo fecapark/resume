@@ -106,12 +106,12 @@ export const MediaLoader = ({ children }: React.PropsWithChildren<unknown>) => {
   )
 }
 
-export const useLoadedVideoSources = () => {
-  const { videos } = useContext(MediaLoaderContext)
+export const useLoadedMediaSources = () => {
+  const sources = useContext(MediaLoaderContext)
 
-  if (!videos) {
-    throw new Error('useLoadedVideoSources는 MediaLoaderContext 하위에서만 사용할 수 있어요.')
+  if (!sources) {
+    throw new Error('useLoadedMediaSources MediaLoaderContext 하위에서만 사용할 수 있어요.')
   }
 
-  return videos
+  return sources
 }

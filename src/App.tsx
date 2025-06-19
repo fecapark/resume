@@ -10,7 +10,7 @@ import { Article } from '@/components/layout/Article'
 import { Block } from '@/components/layout/Block'
 import { Introduction } from '@/components/layout/Introduction'
 import { Section } from '@/components/layout/Section'
-import { useLoadedVideoSources } from '@/components/Providers/MediaLoader'
+import { useLoadedMediaSources } from '@/components/Providers/MediaLoader'
 import { TextLink } from '@/components/TextLink'
 
 const responsive = tv({
@@ -38,7 +38,7 @@ const responsive = tv({
 
 export const App = () => {
   const { container, font } = responsive()
-  const videoSources = useLoadedVideoSources()
+  const { videos } = useLoadedMediaSources()
 
   return (
     <div
@@ -115,7 +115,7 @@ export const App = () => {
                 </span>,
               ]}
               title="메이플랜드 옥션"
-              titleThumbnailSrc={videoSources['/thumbnails/mapleland-auction/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/mapleland-auction/preview.webm']}
             >
               <Block
                 list={[
@@ -188,7 +188,7 @@ export const App = () => {
                 </span>,
               ]}
               title="Time Timer"
-              titleThumbnailSrc={videoSources['/thumbnails/time-timer/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/time-timer/preview.webm']}
             >
               <Block
                 list={[
@@ -268,7 +268,7 @@ export const App = () => {
               ]}
               lowContainerMargin
               title="Yourssu Infrastructure System"
-              titleThumbnailSrc={videoSources['/thumbnails/yis/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/yis/preview.webm']}
             >
               <Block
                 list={[
@@ -343,7 +343,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Number Rolling"
-              titleThumbnailSrc={videoSources['/thumbnails/number-rolling/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/number-rolling/preview.webm']}
             >
               <Block
                 list={[
@@ -386,7 +386,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Metaball Interaction"
-              titleThumbnailSrc={videoSources['/thumbnails/metaball-interaction/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/metaball-interaction/preview.webm']}
             >
               <Block
                 list={[
@@ -431,7 +431,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Material Form"
-              titleThumbnailSrc={videoSources['/thumbnails/material-form/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/material-form/preview.webm']}
             >
               <Block
                 list={[
@@ -491,7 +491,7 @@ export const App = () => {
               lowContainerMargin
               lowContentMargin
               title="Inside Slushy"
-              titleThumbnailSrc={videoSources['/thumbnails/inside-slushy/preview.webm']}
+              titleThumbnailSrc={videos['/thumbnails/inside-slushy/preview.webm']}
             >
               <Block
                 list={[

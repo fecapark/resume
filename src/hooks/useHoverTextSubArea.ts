@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { OnHoveringListener } from '@/components/HoveringText'
+import { useLocomotiveScrollInstance } from '@/components/Providers/LocomotiveScrollInstanceProvider'
 
 export const useHoverTextSubArea = <T extends HTMLElement>() => {
   const subAreaDatasetKey = 'data-hover-target'
 
+  const { locomotiveScrollSectionRef } = useLocomotiveScrollInstance()
   const [hoverTarget, setHoverTarget] = useState<HTMLElement | null>(null)
   const hoverAreaRef = useRef<T>(null)
 
@@ -24,11 +26,14 @@ export const useHoverTextSubArea = <T extends HTMLElement>() => {
     }
 
     const onResize = () => {
-      const scrollContainer = document.querySelector('[data-scroll-section]') as HTMLElement | null
+      const scrollContainer = locomotiveScrollSectionRef.current
+      if (!scrollContainer) {
+        return
+      }
 
       requestAnimationFrame(() => {
-        const scrollMatrix = scrollContainer?.style.transform
-        const y = Number(scrollMatrix?.split(',').at(-3)?.trim() ?? '0') * -1
+        const scrollMatrix = scrollContainer.style.transform
+        const y = Number(scrollMatrix?.split(',')[1]?.trim() ?? '0') * -1
 
         const { left, top, width, height } = hoverTarget.getBoundingClientRect()
 

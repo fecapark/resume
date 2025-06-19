@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import {
   LocomotiveScrollProviderProps,
   LocomotiveScrollProvider as PrimitiveLocomotiveScrollProvider,
@@ -21,8 +20,8 @@ const locomotiveOptions = {
 }
 
 export const LocomotiveScrollLayout = ({ children }: React.PropsWithChildren<unknown>) => {
-  const locomotiveContainerRef = useRef<HTMLDivElement>(null)
-  const { setScroll } = useLocomotiveScrollInstance()
+  const { setScroll, locomotiveScrollContainerRef, locomotiveScrollSectionRef } =
+    useLocomotiveScrollInstance()
 
   const onUpdate: LocomotiveScrollProviderProps['onUpdate'] = (scroll: ScrollType) => {
     setScroll(scroll)
@@ -30,7 +29,7 @@ export const LocomotiveScrollLayout = ({ children }: React.PropsWithChildren<unk
 
   return (
     <PrimitiveLocomotiveScrollProvider
-      containerRef={locomotiveContainerRef}
+      containerRef={locomotiveScrollContainerRef}
       onUpdate={onUpdate}
       options={locomotiveOptions}
       watch={[]}
@@ -38,9 +37,9 @@ export const LocomotiveScrollLayout = ({ children }: React.PropsWithChildren<unk
       <div
         className="size-full overflow-y-scroll"
         data-scroll-container
-        ref={locomotiveContainerRef}
+        ref={locomotiveScrollContainerRef}
       >
-        <div className="size-full" data-scroll-section>
+        <div className="size-full" data-scroll-section ref={locomotiveScrollSectionRef}>
           {children}
         </div>
       </div>

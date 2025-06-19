@@ -96,19 +96,17 @@ export const useContentMinimap = () => {
         return
       }
 
-      requestAnimationFrame(() => {
-        const { transform } = window.getComputedStyle(scrollSection)
-        const transformY = parseFloat(transform.split(',')[5].replace(')', ''))
-        const newTransform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -${e.scroll.y}, 0, 1)`
+      const { transform } = window.getComputedStyle(scrollSection)
+      const transformY = parseFloat(transform.split(',')[5].replace(')', ''))
+      const newTransform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -${e.scroll.y}, 0, 1)`
 
-        const scrollYInt = Math.abs(Math.floor(e.scroll.y))
-        const transformYInt = Math.abs(Math.floor(transformY))
+      const scrollYInt = Math.abs(Math.floor(e.scroll.y))
+      const transformYInt = Math.abs(Math.floor(transformY))
 
-        if (scrollYInt !== transformYInt) {
-          scrollSection.style.setProperty('transform', newTransform)
-        }
-        setScrollYRatio(e.scroll.y / scrollHeight)
-      })
+      if (scrollYInt !== transformYInt) {
+        scrollSection.style.setProperty('transform', newTransform)
+      }
+      setScrollYRatio(e.scroll.y / scrollHeight)
     }
 
     scroll.on('scroll', onScroll)

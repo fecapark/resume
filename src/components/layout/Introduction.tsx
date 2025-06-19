@@ -61,7 +61,11 @@ export const Introduction = () => {
         입니다.
       </HoveringText>
 
-      <HoveringThumbnail ref={hoverAreaRef} src="/thumbnails/me.jpeg" thumbnailType="image" />
+      <HoveringThumbnail
+        ref={hoverAreaRef}
+        src={images['/thumbnails/me.jpeg']}
+        thumbnailType="image"
+      />
 
       <HoveringText>
         <span className="text-grey500 flex">

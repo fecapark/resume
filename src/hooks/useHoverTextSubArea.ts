@@ -31,17 +31,15 @@ export const useHoverTextSubArea = <T extends HTMLElement>() => {
         return
       }
 
-      requestAnimationFrame(() => {
-        const scrollMatrix = scrollContainer.style.transform
-        const y = Number(scrollMatrix?.split(',').at(-3)?.trim() ?? '0') * -1
+      const scrollMatrix = scrollContainer.style.transform
+      const y = Number(scrollMatrix?.split(',').at(-3)?.trim() ?? '0') * -1
 
-        const { left, top, width, height } = hoverTarget.getBoundingClientRect()
+      const { left, top, width, height } = hoverTarget.getBoundingClientRect()
 
-        hoverArea.style.left = `${left}px`
-        hoverArea.style.top = `${top + y}px`
-        hoverArea.style.width = `${width}px`
-        hoverArea.style.height = `${height}px`
-      })
+      hoverArea.style.left = `${left}px`
+      hoverArea.style.top = `${top + y}px`
+      hoverArea.style.width = `${width}px`
+      hoverArea.style.height = `${height}px`
     }
 
     window.addEventListener('resize', onResize)

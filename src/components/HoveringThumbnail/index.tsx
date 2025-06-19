@@ -20,6 +20,7 @@ const exitVariants: Variants = {
   },
   animate: {
     opacity: 1,
+    visibility: 'visible',
     transition: { duration: 0.2 },
   },
 }
@@ -45,7 +46,6 @@ export const HoveringThumbnail = ({
   const y = useSpring(useMotionValue(0), { stiffness: 300, damping: 30 })
 
   const realRef = ref || motionRef
-
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -55,12 +55,11 @@ export const HoveringThumbnail = ({
     if (thumbnailType !== 'video') {
       return
     }
-
     if (isHovering) {
-      videoRef.current.currentTime = 0
       videoRef.current.play()
     } else {
       videoRef.current.pause()
+      videoRef.current.currentTime = 0
     }
   }, [isHovering, thumbnailType])
 
@@ -69,54 +68,40 @@ export const HoveringThumbnail = ({
   }
 
   return (
-    <motion.div
-      className={clsx('absolute', className)}
-      onHoverEnd={(e, i) => {
-        setIsHovering(false)
-        onHoverEnd?.(e, i)
-      }}
-      onHoverStart={(e, i) => {
-        if (!realRef.current) {
-          return
-        }
-        const { top, left } = realRef.current.getBoundingClientRect()
+    <div className={clsx('absolute', className)} ref={realRef}>
+      <motion.div
+        className="size-full"
+        onHoverEnd={(e, i) => {
+          setIsHovering(false)
+          onHoverEnd?.(e, i)
+        }}
+        onHoverStart={(e, i) => {
+          const bottom = e.clientY + mediaHeight
+          const isReversed = bottom > stageHeight
 
-        const yVal = e.clientY - top
-        const bottom = e.clientY + mediaHeight
-        const isReversed = bottom > stageHeight
+          x.jump(e.offsetX)
+          y.jump(isReversed ? e.offsetY - mediaHeight : e.offsetY)
+          onHover()
+          onHoverStart?.(e, i)
+          setIsHovering(true)
+        }}
+        onPointerMove={(e) => {
+          const bottom = e.clientY + mediaHeight
+          const isReversed = bottom > stageHeight
 
-        x.jump(e.clientX - left)
-        y.jump(isReversed ? yVal - mediaHeight : yVal)
-        setIsHovering(true)
-        onHover()
-        onHoverStart?.(e, i)
-      }}
-      onPointerMove={(e) => {
-        if (!realRef.current) {
-          return
-        }
-        const { top, left } = realRef.current.getBoundingClientRect()
-
-        const yVal = e.clientY - top
-        const bottom = e.clientY + mediaHeight
-        const isReversed = bottom > stageHeight
-
-        x.set(e.clientX - left)
-        y.set(isReversed ? yVal - mediaHeight : yVal)
-        onPointerMove?.(e)
-      }}
-      ref={realRef}
-      {...props}
-    >
-      {children}
-      {src && (
-        <motion.div
-          className="pointer-events-none absolute top-2 left-2 z-50 select-none"
-          style={{ x, y }}
-        >
+          x.set(e.nativeEvent.offsetX)
+          y.set(isReversed ? e.nativeEvent.offsetY - mediaHeight : e.nativeEvent.offsetY)
+          onPointerMove?.(e)
+        }}
+        {...props}
+      >
+        {children}
+        {src && (
           <motion.div
             animate={isHovering ? 'animate' : 'initial'}
-            style={{ willChange: 'opacity' }}
+            className="pointer-events-none absolute top-2 left-2 z-50 select-none"
+            initial="initial"
+            style={{ x, y }}
             variants={exitVariants}
           >
             {thumbnailType === 'image' ? (
@@ -146,8 +131,8 @@ export const HoveringThumbnail = ({
               </div>
             )}
           </motion.div>
-        </motion.div>
-      )}
-    </motion.div>
+        )}
+      </motion.div>
+    </div>
   )
 }

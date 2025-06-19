@@ -46,8 +46,8 @@ export const HoveringThumbnail = ({
           return
         }
         const { top, left } = realRef.current.getBoundingClientRect()
-        x.set(e.clientX - left)
-        y.set(e.clientY - top)
+        x.jump(e.clientX - left)
+        y.jump(e.clientY - top)
         setIsHovering(true)
         onHover()
         onHoverStart?.(e, i)
@@ -66,13 +66,16 @@ export const HoveringThumbnail = ({
     >
       {children}
       {isHovering && src && (
-        <motion.div className="pointer-events-none absolute top-2 left-2 z-50" style={{ x, y }}>
+        <motion.div
+          className="pointer-events-none absolute top-2 left-2 z-50 select-none"
+          style={{ x, y }}
+        >
           {thumbnailType === 'image' ? (
-            <div className="border-grey300 max-w-[35vw] overflow-hidden rounded-xl border-[1px]">
+            <div className="shadow-dialog max-w-[35vw] overflow-hidden rounded-xl">
               <img className="object-contain" src={src} />
             </div>
           ) : (
-            <div className="border-grey600 h-fit w-[35vw] overflow-hidden rounded-xl border-[1px]">
+            <div className="shadow-dialog h-fit w-[35vw] overflow-hidden rounded-xl">
               <video autoPlay className="object-contain" loop muted src={src} />
             </div>
           )}

@@ -3,6 +3,7 @@
 @import './typography.css';
 @import './transition.css';
 @import './keyframe.css';
+@import './shadow.css';
 
 * {
   box-sizing: border-box;

@@ -1,112 +1,104 @@
-import { useContext, useEffect, useState } from 'react'
+import clsx from 'clsx'
+import { useContext, useState } from 'react'
 
 import { MediaLoaderContext } from '@/components/Providers/MediaLoader/context'
-import { mediaList, VideoSrcList } from '@/components/Providers/MediaLoader/type'
+import { useLoadMediaWithProgress } from '@/components/Providers/MediaLoader/hook'
+import { GetSourceMapByType, mediaList, MediaType } from '@/components/Providers/MediaLoader/type'
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 
 export const MediaLoader = ({ children }: React.PropsWithChildren<unknown>) => {
-  const [progressList, setProgressList] = useState<number[]>(Array(mediaList.videos.length).fill(0))
-  const [loadedMedias, setLoadedMedias] = useState<{
-    videos: Record<VideoSrcList, string | undefined>
+  const loadMedia = useLoadMediaWithProgress()
+
+  const [progressList, setProgressList] = useState<{
+    images: number[]
+    videos: number[]
   }>({
-    videos: Object.fromEntries(mediaList.videos.map((v) => [v, undefined])) as Record<
-      VideoSrcList,
-      string | undefined
-    >,
+    images: Array(mediaList.images.length).fill(0),
+    videos: Array(mediaList.videos.length).fill(0),
   })
-  const [loaded, setLoaded] = useState(false)
+  const [loadedMedias, setLoadedMedias] = useState<
+    | undefined
+    | {
+        images: GetSourceMapByType<'images'>
+        videos: GetSourceMapByType<'videos'>
+      }
+  >(undefined)
+
   const [showChildren, setShowChildren] = useState(false)
 
-  const loadVideo = (src: VideoSrcList, index: number) => {
-    const xmlReq = new XMLHttpRequest()
-    xmlReq.open('GET', src, true)
-    xmlReq.responseType = 'arraybuffer'
-
-    xmlReq.onloadstart = () => {
-      setProgressList((prev) => {
-        const newProgress = [...prev]
-        newProgress[index] = 0
-        return newProgress
-      })
-    }
-
-    xmlReq.onprogress = (e) => {
-      setProgressList((prev) => {
-        const newProgress = [...prev]
-        newProgress[index] = e.total !== 0 ? e.loaded / e.total : 0
-        return newProgress
-      })
-    }
-
-    xmlReq.onload = () => {
-      const blob = new Blob([xmlReq.response], { type: 'video/webm' })
-
-      setLoadedMedias((prev) => ({
-        ...prev,
-        videos: {
-          ...prev.videos,
-          [src]: window.URL.createObjectURL(blob),
-        },
-      }))
-
-      setProgressList((prev) => {
-        const newProgress = [...prev]
-        newProgress[index] = 1
-        return newProgress
-      })
-    }
-
-    xmlReq.send()
+  const getTotalLoadPercentage = () => {
+    const videoProgress = progressList.videos.reduce((cur, acc) => cur + acc, 0)
+    const imageProgress = progressList.images.reduce((cur, acc) => cur + acc, 0)
+    const totalProgress = imageProgress + videoProgress
+    const totalAmount = mediaList.images.length + mediaList.videos.length
+    return Math.ceil((totalProgress / totalAmount) * 100)
   }
 
-  useEffect(() => {
-    mediaList.videos.forEach((video, index) => {
-      loadVideo(video, index)
+  const setProgressOf = (index: number, type: MediaType) => (progress: number) =>
+    setProgressList((prev) => {
+      const newProgress = [...prev[type]]
+      newProgress[index] = progress
+      return {
+        ...prev,
+        [type]: newProgress,
+      }
     })
-  }, [])
 
-  useEffect(() => {
-    if (Object.values(loadedMedias.videos).every((v) => v !== undefined)) {
-      setLoaded(true)
-    }
-  }, [loadedMedias.videos])
+  const onAllMediaLoaded = ({
+    allVideoSources,
+    allImageSources,
+  }: {
+    allImageSources: string[]
+    allVideoSources: string[]
+  }) => {
+    const getSourceMap = <TType extends MediaType>(sources: string[], type: TType) =>
+      Object.fromEntries(
+        sources.map((src, index) => [mediaList[type][index], src])
+      ) as GetSourceMapByType<TType>
 
-  useEffect(() => {
-    if (loaded) {
-      setTimeout(() => {
-        setShowChildren(true)
-      }, 500)
-    }
-  }, [loaded])
+    setLoadedMedias({
+      images: getSourceMap(allImageSources, 'images'),
+      videos: getSourceMap(allVideoSources, 'videos'),
+    })
+
+    setTimeout(() => setShowChildren(true), 550)
+  }
+
+  useEffectOnce(() => {
+    ;(async () => {
+      const allSources = await Promise.all(
+        [...mediaList.images, ...mediaList.videos].map(async (src, index) => {
+          const onProgressChange = setProgressOf(index, 'videos')
+          return loadMedia({ src, onProgressChange })
+        })
+      )
+      onAllMediaLoaded({
+        allImageSources: allSources.slice(0, mediaList.images.length),
+        allVideoSources: allSources.slice(mediaList.images.length),
+      })
+    })()
+  })
 
   return (
     <>
       <div className="fixed top-0 left-0 -z-1 flex size-full items-center justify-center">
         <div className="overflow-hidden text-lg font-medium">
           <div
-            className=""
-            style={
-              loaded
-                ? {
-                    transform: 'translate3d(0, -100%, 0)',
-                    transition: 'transform cubic-bezier(0.7, 0, 0.84, 0) 1.2s',
-                  }
-                : {}
-            }
-          >
-            {Math.ceil(
-              (progressList.reduce((cur, acc) => {
-                return cur + acc
-              }, 0) /
-                mediaList.videos.length) *
-                100
+            className={clsx(
+              'will-change-transform',
+              loadedMedias &&
+                '-translate-y-full transition-transform duration-[1.2s] ease-[cubic-bezier(0.7,0,0.84,0)]'
             )}
-            %
+          >
+            {getTotalLoadPercentage()}%
           </div>
         </div>
       </div>
 
-      {showChildren && (
-        <MediaLoaderContext.Provider value={{ videos: loadedMedias.videos }}>
+      {showChildren && loadedMedias && (
+        <MediaLoaderContext.Provider
+          value={{ images: loadedMedias.images, videos: loadedMedias.videos }}
+        >
           {children}
         </MediaLoaderContext.Provider>
       )}

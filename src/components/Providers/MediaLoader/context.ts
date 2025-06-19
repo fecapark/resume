@@ -1,13 +1,13 @@
 import { createContext } from 'react'
 
-import { VideoSrcList } from '@/components/Providers/MediaLoader/type'
+import { GetSourceMapByType } from '@/components/Providers/MediaLoader/type'
 
 interface MediaLoaderContextProps {
-  videos: Record<VideoSrcList, string | undefined>
+  images: GetSourceMapByType<'images'>
+  videos: GetSourceMapByType<'videos'>
 }
 
 export const MediaLoaderContext = createContext<MediaLoaderContextProps>({
-  videos: Object.fromEntries(
-    Array.from({ length: 10 }, (_, i) => [`/thumbnails/video-${i}/preview.webm`, undefined])
-  ) as Record<VideoSrcList, string | undefined>,
+  images: {} as GetSourceMapByType<'images'>,
+  videos: {} as GetSourceMapByType<'videos'>,
 })

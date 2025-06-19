@@ -33,7 +33,7 @@ export const useHoverTextSubArea = <T extends HTMLElement>() => {
 
       requestAnimationFrame(() => {
         const scrollMatrix = scrollContainer.style.transform
-        const y = Number(scrollMatrix?.split(',')[1]?.trim() ?? '0') * -1
+        const y = Number(scrollMatrix?.split(',').at(-3)?.trim() ?? '0') * -1
 
         const { left, top, width, height } = hoverTarget.getBoundingClientRect()
 

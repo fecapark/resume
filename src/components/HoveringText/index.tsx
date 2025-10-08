@@ -3,7 +3,6 @@
 import clsx from 'clsx'
 import { motion, Variants } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
-import { useIntersectionObserver } from 'react-simplikit'
 import SplitType, { SplitTypeOptions } from 'split-type'
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
 
@@ -50,29 +49,29 @@ export const HoveringText = ({
 }: React.PropsWithChildren<HoveringTextProps>) => {
   const [lines, setLines] = useState<React.ReactElement[] | undefined>(undefined)
   const [isLineSetted, setIsLineSetted] = useState(false)
-  const [showingLines, setShowingLines] = useState(false)
+  const [showingLines] = useState(true)
   const [isMinimapContent, setIsMinimapContent] = useState(false)
 
   const textRef = useRef<HTMLDivElement>(null)
-  const observerRef = useIntersectionObserver<HTMLDivElement>(
-    (entry) => {
-      const { intersectionRatio } = entry
-      const canShow = intersectionRatio > 0.1
+  // const observerRef = useIntersectionObserver<HTMLDivElement>(
+  //   (entry) => {
+  //     const { intersectionRatio } = entry
+  //     const canShow = intersectionRatio > 0.1
 
-      if (isMinimapContent || !canShow) {
-        return
-      }
-      setShowingLines(true)
-    },
-    {
-      rootMargin: `${document.body.clientHeight}px 0px 0px 0px`,
-      threshold: [0, 0.1],
-    }
-  )
+  //     if (isMinimapContent || !canShow) {
+  //       return
+  //     }
+  //     setShowingLines(true)
+  //   },
+  //   {
+  //     rootMargin: `${document.body.clientHeight}px 0px 0px 0px`,
+  //     threshold: [0, 0.1],
+  //   }
+  // )
 
   const updateTextRef = (element: HTMLDivElement | null) => {
     textRef.current = element
-    observerRef(element)
+    // observerRef(element)
 
     const isMinimap = !!element?.closest('[data-content-minimap]')
     setIsMinimapContent(isMinimap)

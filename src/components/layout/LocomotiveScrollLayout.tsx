@@ -15,6 +15,8 @@ const locomotiveOptions = {
   tablet: {
     smooth: true,
   },
+  // lerp: 0.08,
+  // multiplier: 1.2,
   lerp: 0.08,
   multiplier: 1.2,
 }

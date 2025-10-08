@@ -1,3 +1,4 @@
 export const config = {
-  printMode: false,
+  printMode: true,
+  siteMode: true,
 }

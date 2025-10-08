@@ -15,6 +15,7 @@
     "gen-color:watch": "pnpm tsx watch --clear-screen=false --include ./src/styles/color.variable.css ./scripts/codegen/gen-color.mts"
   },
   "dependencies": {
+    "@radix-ui/react-portal": "^1.1.9",
     "@toss/storage": "^1.4.1",
     "@toss/utils": "^1.6.1",
     "clsx": "^2.1.1",

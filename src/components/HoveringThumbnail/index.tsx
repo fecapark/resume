@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import { HTMLMotionProps, motion, useMotionValue, useSpring, Variants } from 'motion/react'
 import { RefObject, useEffect, useRef, useState } from 'react'
 
-import { useHoverThumbnailInfo } from '@/components/Providers/HoverThumbnailInfoProvider'
 import * as Portal from '@radix-ui/react-portal'
 
 type HoveringThumbnailProps = HTMLMotionProps<'div'> & {
@@ -36,7 +35,6 @@ export const HoveringThumbnail = ({
   ...props
 }: React.PropsWithChildren<HoveringThumbnailProps>) => {
   const motionRef = useRef<HTMLDivElement>(null)
-  const { onHover } = useHoverThumbnailInfo()
   const [isHovering, setIsHovering] = useState(false)
 
   const x = useSpring(useMotionValue(0), { stiffness: 300, damping: 30 })
@@ -74,7 +72,6 @@ export const HoveringThumbnail = ({
 
           x.jump(0)
           y.jump(0)
-          onHover()
           onHoverStart?.(e, i)
           setIsHovering(true)
         }}
